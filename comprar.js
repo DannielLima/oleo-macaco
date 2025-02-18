@@ -26,12 +26,17 @@ function comprar() {
 
   setTimeout(() => {
     clearInterval(intervalo);
-    alert(
-      "Falha ao processar a compra. Seu navegador não é compatível com macacos."
-    );
-    barra.classList.add("hidden");
-    mensagem.classList.add("hidden");
-    botao.innerText = "Comprar Agora";
-    botao.disabled = false;
+    Swal.fire({
+      icon: "error",
+      title: "Oops",
+      text: "Falha ao processar a compra. Seu navegador não é compatível com macacos.",
+      confirmButtonText: "OK",
+      confirmButtonColor: "#3085d6",
+    }).then(() => {
+      barra.classList.add("hidden");
+      mensagem.classList.add("hidden");
+      botao.innerText = "Comprar Agora";
+      botao.disabled = false;
+    });
   }, 8000);
 }
