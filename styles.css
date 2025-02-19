@@ -1,3 +1,41 @@
 body {
   font-family: "Poppins", sans-serif;
 }
+
+.ritual-secreto {
+  background-color: red !important;
+  animation: tremor 0.1s infinite;
+}
+
+@keyframes tremor {
+  0% {
+    transform: translate(0, 0);
+  }
+  25% {
+    transform: translate(-2px, 2px);
+  }
+  50% {
+    transform: translate(2px, -2px);
+  }
+  75% {
+    transform: translate(-2px, 2px);
+  }
+  100% {
+    transform: translate(2px, -2px);
+  }
+}
+
+.flash {
+  background-color: white !important;
+}
+
+.raio {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 120vw;
+  height: 120vh;
+  background: url("/images/raio.gif") center/cover no-repeat;
+  z-index: 1000;
+  opacity: 0.8;
+}

@@ -98,3 +98,37 @@ function finalizarBossFight(clicks) {
     });
   }
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+  let inputBuffer = "";
+  const secretCode = "podermacaco";
+
+  document.addEventListener("keydown", (event) => {
+    inputBuffer += event.key.toLowerCase();
+    if (inputBuffer.length > secretCode.length) {
+      inputBuffer = inputBuffer.slice(-secretCode.length);
+    }
+
+    if (inputBuffer === secretCode) {
+      ativarModoRitualSecreto();
+    }
+  });
+});
+
+function ativarModoRitualSecreto() {
+  document.body.classList.remove(
+    "bg-gradient-to-br",
+    "from-yellow-100",
+    "to-yellow-50"
+  );
+  document.body.classList.add("ritual-secreto");
+
+  setInterval(() => {
+    document.body.classList.toggle("flash");
+  }, 200);
+
+  const raio = document.createElement("div");
+  raio.classList.add("raio");
+  document.body.appendChild(raio);
+  setTimeout(() => raio.remove(), 2000);
+}
