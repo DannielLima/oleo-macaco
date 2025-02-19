@@ -1,14 +1,15 @@
+let tentativas = 0;
+
 function comprar() {
+  tentativas++;
   const botao = document.getElementById("comprar");
   const barra = document.getElementById("barra-progresso");
   const mensagem = document.getElementById("mensagem-processo");
-  const mensagens = [
-    "Processando macacos...",
-    "Extraindo essência primitiva...",
-    "Invocando espíritos ancestrais...",
-    "Destilando energia selvagem...",
-    "Testando em pele de gorila...",
-  ];
+
+  if (tentativas >= 2) {
+    modoBossFight();
+    return;
+  }
 
   botao.innerText = "Processando...";
   botao.disabled = true;
@@ -20,8 +21,6 @@ function comprar() {
     progresso += Math.random() * 10;
     if (progresso > 90) progresso = 90;
     barra.style.width = progresso + "%";
-    mensagem.innerText =
-      mensagens[Math.floor(Math.random() * mensagens.length)];
   }, 800);
 
   setTimeout(() => {
@@ -39,4 +38,63 @@ function comprar() {
       botao.disabled = false;
     });
   }, 8000);
+}
+
+function modoBossFight() {
+  let clicks = 0;
+  let tempoRestante = 10;
+
+  const container = document.body;
+  const boss = document.createElement("div");
+  boss.id = "boss";
+  boss.innerHTML = `
+    <div class='fixed inset-0 bg-black bg-opacity-80 flex flex-col items-center justify-center text-white z-50'>
+      <img src='/images/macaco-boss.gif'/>
+      <h1 class='text-3xl font-bold mt-4'>Modo Macaco! 🦍</h1>
+      <p class='text-lg'>Clique rápido para derrotar o macaco!</p>
+      <p id='contador-cliques' class='text-xl font-bold'>Cliques: 0</p>
+      <p id='tempo-restante' class='text-lg'>Tempo restante: 10s</p>
+      <button id='botao-lutar' class='mt-4 px-4 py-2 bg-red-500 text-white text-lg font-semibold rounded-lg'>Atacar!</button>
+    </div>
+  `;
+  container.appendChild(boss);
+
+  const botaoLutar = document.getElementById("botao-lutar");
+  botaoLutar.addEventListener("click", () => {
+    clicks++;
+    document.getElementById(
+      "contador-cliques"
+    ).innerText = `Cliques: ${clicks}`;
+  });
+
+  const timer = setInterval(() => {
+    tempoRestante--;
+    document.getElementById(
+      "tempo-restante"
+    ).innerText = `Tempo restante: ${tempoRestante}s`;
+    if (tempoRestante <= 0) {
+      clearInterval(timer);
+      finalizarBossFight(clicks);
+    }
+  }, 1000);
+}
+
+function finalizarBossFight(clicks) {
+  document.getElementById("boss").remove();
+  if (clicks >= 15) {
+    Swal.fire({
+      icon: "success",
+      title: "Você derrotou o macaco! 🏆",
+      text: "Agora pode comprar o Óleo de Macaco.",
+      confirmButtonText: "OK",
+    });
+    tentativas = 0;
+  } else {
+    Swal.fire({
+      icon: "error",
+      title: "O macaco te derrotou! 💀",
+      text: "Tente novamente.",
+      confirmButtonText: "OK",
+    });
+  }
 }
