@@ -20,8 +20,8 @@ function comprar() {
   const intervalo = setInterval(() => {
     progresso += Math.random() * 10;
     if (progresso > 90) progresso = 90;
-    barra.style.width = progresso + "%";
-  }, 800);
+    barra.style.width = `${progresso}%`;
+  }, 400);
 
   setTimeout(() => {
     clearInterval(intervalo);
