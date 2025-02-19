@@ -37,7 +37,7 @@ function comprar() {
       botao.innerText = "Comprar Agora";
       botao.disabled = false;
     });
-  }, 8000);
+  }, 2000);
 }
 
 function modoBossFight() {
